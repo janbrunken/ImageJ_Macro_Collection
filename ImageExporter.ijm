@@ -11,7 +11,7 @@ run("Close All");
 run("Clear Results");	
 print("\\Clear");
 setOption("ExpandableArrays", true);
-setBatchMode(true)
+//setBatchMode(true)
 run("Bio-Formats Macro Extensions");
 //Create dialogue 
 rows = 4;
@@ -110,12 +110,11 @@ length = fileList.length;
 for (j = 0; j < length; j++) {
 	if (indexOf(fileList[j-i] , "/") >= 0) {
 		fileList = Array.deleteIndex(fileList, j-i);
-		i++;
 	}
-	if (endsWith(fileList[j-i] , ".lifext")) {
+	if (endsWith(fileList[j-i], ".lifext")) {
 		fileList = Array.deleteIndex(fileList, j-i);
-		i++;
 	}
+	i++;
 }
 
 print("The following list of files will be processed:");
@@ -380,7 +379,7 @@ for (f = 0; f < fileList.length; f++) {
 						run("Close");
 					}
 					else if (MaxIP == false && SumSP == true) {
-						File.makeDirectory(export_path + "/C" + j+1 + "/SumSP");
+						File.makeDirectory(export_path + "/C" + chCount - j + "/SumSP");
 						if (is4D == true) {
 							run("Z Project...", "projection=[Sum Slices] all");
 						}
@@ -391,7 +390,7 @@ for (f = 0; f < fileList.length; f++) {
 							run(chColors[0]);
 						}
 						else {
-							for (k = 0; i < chCount; k++) {
+							for (k = 0; k < chCount; k++) {
 								Stack.setChannel(k+1);
 								run(chColors[k]);
 							}
@@ -409,10 +408,11 @@ for (f = 0; f < fileList.length; f++) {
 							run("AVI... ", "compression=" + compression + " frame=" + fps + " save=" + export_path + "/C" + chCount-j + "/SumSP/" + fileName + "_Series" + i + "_SumSP.avi");
 						}
 						if (saveFormat == "png") { //if png export
-							run("PNG...", "save=" + export_path + "/SumSP/" + "/C" + chCount-j + fileName + "_Series" + i + "_SumSP.png");
+							run("PNG...", "save=" + export_path + "/C" + chCount-j + "/SumSP/" + fileName + "_Series" + i + "_SumSP.png");
 						}
 						if (saveFormat == "tiff") { //if tif export
 							run("Tiff...", "save=" + export_path + "/C" + chCount-j + "/SumSP/" + fileName + "_Series" + i + "_SumSP.tif");
+							
 						}
 						run("Close");
 						run("Close");
